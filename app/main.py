@@ -17,23 +17,26 @@ def chat():
         print(f"Escapa: {response}")
 
 def process_input(user_input):
-       # Use the classifier to identify the intent
     intent = classify_intent(user_input)
+
+    # Update the conversation topic based on the identified intent
+    conversation_context.update_topic(intent)
+
+    # Check for context-based responses (handles repeated greetings)
+    context_response = conversation_context.get_response(user_input)
+    if context_response:
+        return context_response
 
     # Respond based on the identified intent
     if intent == "greeting":
-        # Check if we already responded to a greeting
-        if conversation_context.last_topic == "greetings":
-            return "We already said hello, let's chat about something else!"
-        else:
-            conversation_context.update_topic("greetings")
-            return random.choice(greeting_responses)
+        return random.choice(greeting_responses)
     elif intent == "farewell":
         return "Goodbye! Talk to you later."
     elif intent == "question":
         return "That's an interesting question. Let me think about it."
     else:
         return "I'm still learning, but I'm getting better every day!"
+
 
 if __name__ == "__main__":
     print("The question is the shape of your key, will you escape?")

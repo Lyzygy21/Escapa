@@ -1,4 +1,6 @@
 # manager.py
+import random
+from app.main import greeting_responses
 
 def get_response(intent, user_input, conversation_context):
     """
@@ -14,8 +16,7 @@ def get_response(intent, user_input, conversation_context):
         return handle_unknown()
 
 def handle_greeting(conversation_context):
-    # Example response logic for greeting
-    return "Hello! How can I help you today?"
+    return random.choice(greeting_responses)
 
 def handle_farewell(conversation_context):
     # Example response logic for farewell
